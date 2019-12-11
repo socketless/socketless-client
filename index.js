@@ -1,4 +1,4 @@
-const request = require('request');
+const rp = require('request-promise-native');
 const querystring = require('querystring');
 
 const SERVER_URL = process.env.SOCKETLESS_REST_URL || 'http://localhost:4000/';
@@ -35,13 +35,12 @@ class SocketlessClient {
     // send to correct server
   }
 
-  sendToTag(tag, msg) {
+  async sendToTag(tag, msg) {
     const reqOpts = { url: constructUrl('sendToTag', { tag }) };
     setReqOptsFromMsg(msg, reqOpts);
 
-    request.post(reqOpts, (err, res, body) => {
-      console.log('sendToTag query got back', body);
-    });
+    const body = await rp.post(reqOpts);
+    console.log('sendToTag query got back', body);
   }
 
   sendToAll(msg, extra) {
@@ -62,18 +61,16 @@ class IncomingMessageRequest {
     console.log(this);
   }
 
-  addTag(tag) {
+  async addTag(tag) {
     const url = constructUrl('addTag', { sid: this.sid, tag });
-    request(url, (err, res, body) => {
-      console.log('addTag query got back', body);
-    });
+    const body = await rp(url);
+    console.log('addTag query got back', body);
   }
 
-  setMessageData(key, val) {
+  async setMessageData(key, val) {
     const url = constructUrl('setMessageData', { sid: this.sid, key, val });
-    request(url, (err, res, body) => {
-      console.log('setMessageData query got back', body);
-    });
+    const body = await rp(url);
+    console.log('setMessageData query got back', body);
   }
 
 }
