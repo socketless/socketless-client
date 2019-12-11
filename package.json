@@ -1,0 +1,11 @@
+{
+  "name": "socketless-client",
+  "version": "0.0.1",
+  "description": "API for serverless lambdas to work with socketless-server websocket router",
+  "author": "Gadi Cohen <dragon@wastelands.net>",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "request": "^2.88.0"
+  }
+}
